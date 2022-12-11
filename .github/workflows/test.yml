@@ -1,0 +1,22 @@
+name: Unit Tests (Manual)
+on: 
+  workflow_dispatch:
+    inputs:
+      lab:
+        description: 'Lab to run tests for'     
+        required: true
+        default: 'Lab03'
+        type: choice
+        options:
+        - Lab03
+        - Lab09
+jobs:
+  runtest:
+    runs-on: ubuntu-20.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build and run tests
+        run: bash tests.sh -xe
+        env:
+          LAB_TO_TEST: ${{ github.event.inputs.lab }}
